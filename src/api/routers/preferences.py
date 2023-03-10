@@ -47,14 +47,10 @@ async def preferences_options(service=Depends(Services.Preferences)):
 )
 async def create_preferences(
     preferences: Schema.Preferences,
-    background: BackgroundTasks,
     service=Depends(Services.Preferences),
 ):
     """Endpoint is used to create a `Preferences` entity"""
     result = service.create(preferences)
-
-    # ? Is executed after the router has returned a response
-    background.add_task(Tasks.get("preferences").do_after, entity="preferences")
 
     if not result:
         raise HTTPException(status.HTTP_400_BAD_REQUEST)

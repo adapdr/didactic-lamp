@@ -43,14 +43,10 @@ async def users_options(service=Depends(Services.Users)):
 )
 async def create_users(
     users: Schema.Users,
-    background: BackgroundTasks,
     service=Depends(Services.Users),
 ):
     """Endpoint is used to create a `Users` entity"""
     result = service.create(users)
-
-    # ? Is executed after the router has returned a response
-    background.add_task(Tasks.Users.do_after, entity=result)
 
     if not result:
         raise HTTPException(status.HTTP_400_BAD_REQUEST)

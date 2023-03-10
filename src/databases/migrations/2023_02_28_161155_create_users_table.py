@@ -13,7 +13,6 @@ class CreateUsersTable(Migration):
 
             table.text("name", length=128)
             table.text("gender", length=32)
-            table.text("pronouns", length=32)
             table.integer("age", length=3)
             table.text("email", length=64)
             table.text("password", length=128, nullable=True)

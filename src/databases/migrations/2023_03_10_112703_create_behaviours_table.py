@@ -1,26 +1,27 @@
-"""CreatePreferencesTable Migration."""
+"""CreateBehavioursTable Migration."""
 
 from masoniteorm.migrations import Migration
 
 
-class CreatePreferencesTable(Migration):
+class CreateBehavioursTable(Migration):
     def up(self):
         """
         Run the migrations.
         """
-        with self.schema.create("preferences") as table:
+        with self.schema.create("behaviours") as table:
             table.uuid("uuid").primary()
-            table.boolean("toggle_email").default(True)
-            table.boolean("toggle_notifications").default(True)
+            table.text("name", nullable=True)
+            table.text("address")
 
             table.uuid("user_id").foreign("user_id").references("uuid").on(
                 "users"
             ).on_delete("cascade")
 
             table.timestamps()
+            table.soft_deletes()
 
     def down(self):
         """
         Revert the migrations.
         """
-        self.schema.drop("preferences")
+        self.schema.drop("behaviours")

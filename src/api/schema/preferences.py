@@ -10,19 +10,20 @@ from pydantic import BaseModel, Field
 class Preferences(BaseModel):
     """Model for a `Preferences` object"""
 
+    # ? References
     uuid: UUID = Field(description="Unique IDentifier", default_factory=uuid4)
-    user_id: UUID = Field(
-        description="User the preferences belongs to", default_factory=uuid4
-    )
+    user_id: UUID = Field(..., description="User IDentifier")
 
-    toggle_dark_mode: bool = Field(True, description="Toggle dark mode")
+    # ? Data properties
     toggle_email: bool = Field(True, description="Toggle email")
     toggle_notifications: bool = Field(True, description="Toggle notifications")
 
+    # ? Timestamps
     __created_at__: str = Field(..., description="When the record was created")
     __updated_at__: str = Field(..., description="When the record was last updated")
 
     class Config:
+        """Internal pydantic config"""
         orm_mode = True
 
 

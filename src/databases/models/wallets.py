@@ -1,14 +1,14 @@
-"""File contains preferences model"""
+"""File contains wallets model"""
 from masoniteorm.models import Model
 from masoniteorm.relationships import belongs_to
-from masoniteorm.scopes import UUIDPrimaryKeyMixin
+from masoniteorm.scopes import SoftDeletesMixin, UUIDPrimaryKeyMixin
 
 
-class PreferencesModel(Model, UUIDPrimaryKeyMixin):
-    """Database ORM Model for 'preferences'"""
+class WalletsModel(Model, UUIDPrimaryKeyMixin, SoftDeletesMixin):
+    """Database ORM Model for 'wallets'"""
 
     # __connection__ = 'NAME'
-    __table__ = "preferences"
+    __table__ = "wallets"
     __primary_key__ = "uuid"
 
     __timezone__ = "Europe/Amsterdam"
