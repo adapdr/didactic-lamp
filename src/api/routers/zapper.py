@@ -1,45 +1,41 @@
-"""File contains endpoint router for '/webhooks'"""
+"""File contains endpoint router for '/zapper'"""
 from logging import getLogger
 from uuid import UUID
 
-from fastapi import APIRouter, BackgroundTasks, Depends, Path, Query, Security, status
+from fastapi import APIRouter, Depends, Path, Query, Security, status
 from fastapi.exceptions import HTTPException
-from fastapi.responses import Response
 
 from api.auth import Auth
 from api.responses import Responses
-from api.schema import Schema
-from api.services import Services
-from api.tasks import Tasks
+from api.integrations import Integrations
 
-# ! TODO: Add intergations & events
 
 # ? Router Configuration
 logger = getLogger(__name__)
 router = APIRouter(
-    prefix="/api/integrations/zapper",
+    prefix="/api/integrations/zapper-api", tags=["Integrations"], dependencies=[Security(Auth.basic)]
 )
 
 # ? Select Schema & Responses
-Schema = Schema.Webhooks
-Responses = Responses.Webhooks
+Responses = Responses.Zapper
 
-# ? Router Endpoints
-@router.post(
-    path="/",
-    operation_id="api.webhooks.create",
-    responses=Responses.create,
-    status_code=201,
-    tags=["Integrations"]
+
+@router.get(
+    path="/{address}",
+    operation_id="api.integrations.zapper.retrieve",
+    responses=Responses.retrieve,
 )
-async def hook_something(
-    webhooks: Schema.Webhooks,
-    service=Depends(Services.Webhooks),
+async def lookup_wallet_address(
+    address: str = Path(
+        None, description="Wallet to Lookup"
+    ),
+    integration=Depends(Integrations.Zapper),
 ):
-    """Endpoint is used as a callback hook for Zapper API"""
-    result = service.create(webhooks)
+    """Endpoint is used to lookup a users `wallet` on Zapper"""
+
+    result = await integration.balances_apps(addresses=[address])
 
     if not result:
-        raise HTTPException(status.HTTP_400_BAD_REQUEST)
+        raise HTTPException(status.HTTP_404_NOT_FOUND)
 
-    return Response("OK", status.HTTP_200_OK)
+    return result

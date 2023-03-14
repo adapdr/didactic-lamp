@@ -1,9 +1,10 @@
 """Module contains all API Integrations"""
+from .zapper import ZapperIntegration
 
 
 class IntegrationsContainer:
     """Holds all API Integrations"""
-    pass
+    Zapper = ZapperIntegration
 
 
 Integrations = IntegrationsContainer()
