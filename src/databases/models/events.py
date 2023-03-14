@@ -1,6 +1,5 @@
 """File contains events model"""
 from masoniteorm.models import Model
-from masoniteorm.relationships import belongs_to
 from masoniteorm.scopes import SoftDeletesMixin, UUIDPrimaryKeyMixin
 
 

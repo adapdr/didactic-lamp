@@ -1,13 +1,11 @@
 """
 File contains response model/schema for the `Users` table
 """
-import hashlib
 from random import choice
 from secrets import token_urlsafe
-from typing import Any, List, Optional
+from typing import List, Optional
 from uuid import UUID, uuid4
 
-import bcrypt
 from faker import Faker
 from pydantic import BaseModel, EmailStr, Field, SecretStr
 

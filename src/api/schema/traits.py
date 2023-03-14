@@ -1,8 +1,8 @@
 """File contains response model/schema for the `Traits` table"""
-from typing import List, Optional
+from typing import List
 from uuid import UUID, uuid4
 
-from pydantic import BaseModel, Field, SecretStr
+from pydantic import BaseModel, Field
 
 
 class Traits(BaseModel):

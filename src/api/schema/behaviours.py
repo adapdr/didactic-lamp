@@ -1,5 +1,5 @@
 """File contains response model/schema for the `Behaviours` table"""
-from typing import List, Optional
+from typing import List
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, Field

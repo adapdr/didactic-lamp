@@ -27,10 +27,10 @@ class Auth:
             [
                 secrets.compare_digest(
                     credentials.username.encode("utf8"),
-                    Config().auth.username.encode("utf8")),
+                    Config.Auth.username.encode("utf8")),
                 secrets.compare_digest(
                     credentials.password.encode("utf8"),
-                    Config().auth.password.encode("utf8")),
+                    Config.Auth.password.encode("utf8")),
             ]
         )
         if not valid_credentials:
